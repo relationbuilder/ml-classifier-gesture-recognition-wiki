@@ -80,11 +80,31 @@ You will have to install Tensorflow and TLearn dependencies on your own but I di
 
 
 
+----------------
 
+# Editing Wiki as Source code
+
+This Wiki can be downloaded as a mercurial repository,  edited locally and updated just like any other repository.    I used the clone functionality in SourceTree with with the URI https://joexdobs@bitbucket.org/joexdobs/ml-classifier-gesture-recognition/wiki in source tree. 
+
+##Recomended Editor
+I have found the [Typora Editor](https://typora.io/) saves an imense amount of time when editing markdown because you can see mostly what will be shown on the BitBucket and Github pages in a sort of Wysiwig format.  I still find that I have to revert to source mode under view for some features but it is a lot better editing in a simple text ediitor.   I wish Typora included some more advanced spelling and gramar checking but it is the best I have found so far.
+
+--------------------
+
+# 
+
+---------------------------
 
 
 
 ----------------------------------------
+# STOP HERE
+Contents below here are just examples of different wiki features
+---------------------------
+
+---------------------------
+
+
 
 Welcome to your wiki! This is the default page we've installed for your convenience. Go ahead and edit it.
 
