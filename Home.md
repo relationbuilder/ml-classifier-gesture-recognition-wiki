@@ -1,10 +1,10 @@
 # Quantized Machine Learning Classifier
 
-**This Project is [Currently Hosted on BitBucket](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition)**
+**This Project is [Currently Hosted on BitBucket](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition)**   You will find detailed instructions,  source code, sample data ans cripts to run the tests in the main repository.
 
 The Quantized Classifier is a high performance, high precision classifier built using knowledge I gained while working on classifiers to predict stock price movement over a period of several years.   For some data sets it delivers results equal or better than a Tensorflow Deep Learning while running faster and with fewer dependencies.
 
-## How It works:
+## How Quantized Classifier works:
 
 The Quantized classifier uses some concepts from KNN, Bayesian probability, Clustering and Ensembles.   It uses these  techniques to build an in memory training set that is much smaller than the input source data. It is ideal for very large data sets that exceed RAM.
 
