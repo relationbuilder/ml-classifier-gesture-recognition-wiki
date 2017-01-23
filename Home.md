@@ -2,11 +2,11 @@
 
 **This Project is [Currently Hosted on BitBucket](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition)**
 
-The Quantized Classifier is a high performance, high precision classifier built using knowledge I gained while working on classifiers to predict stock price movement over a period of several years. For some data sets it delivers results equal or better than Deep Learning provided by Tensorflow while running faster and with fewer dependencies.
+The Quantized Classifier is a high performance, high precision classifier built using knowledge I gained while working on classifiers to predict stock price movement over a period of several years.   For some data sets it delivers results equal or better than a Tensorflow Deep Learning while running faster and with fewer dependencies.
 
 ## How It works:
 
-The Quantized classifier uses some features from KNN, Bayesian probability, Clustering and Ensemble techniques to build an in memory training set that is much smaller than the input source data. It is ideal for very large data sets that exceed RAM.
+The Quantized classifier uses some concepts from KNN, Bayesian probability, Clustering and Ensembles.   It uses these  techniques to build an in memory training set that is much smaller than the input source data. It is ideal for very large data sets that exceed RAM.
 
 It leverages an important principal I discovered using machine learning on stock data. Similarity for a given feature tends to be measured by numbers that are close together. For example, stocks that have risen by 1% to 1.1% during the last day are more similar than those that have risen by 2%. This principal allows values to be clustered in evenly sized groups with classification statistics measured at the group level without retaining the original training data. This seems simple but it can deliver blinding fast training, extremely fast classification and seems to deliver accurate results.
 
@@ -86,6 +86,8 @@ You will have to install Tensorflow and TLearn dependencies on your own but I di
 
 This Wiki can be downloaded as a mercurial repository,  edited locally and updated just like any other repository.    I used the clone functionality in SourceTree with with the URI https://joexdobs@bitbucket.org/joexdobs/ml-classifier-gesture-recognition/wiki in source tree. 
 
+I wish that BitBucket offered an option so that a directory called /wiki inside the main project repository could be the source for the wiki rather than requiring a separate project.   The documenation really should be viewed as a code asset anyway.
+
 ##Recomended Editor
 I have found the [Typora Editor](https://typora.io/) saves an imense amount of time when editing markdown because you can see mostly what will be shown on the BitBucket and Github pages in a sort of Wysiwig format.  I still find that I have to revert to source mode under view for some features but it is a lot better editing in a simple text ediitor.   I wish Typora included some more advanced spelling and gramar checking but it is the best I have found so far.
 
@@ -94,6 +96,36 @@ I have found the [Typora Editor](https://typora.io/) saves an imense amount of t
 # 
 
 ---------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
