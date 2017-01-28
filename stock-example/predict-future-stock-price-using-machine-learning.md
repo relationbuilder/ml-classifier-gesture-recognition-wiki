@@ -75,7 +75,7 @@ We always allow machine learning engines to train on a part of the data then tes
 
 The classifier is invoked by a shell script [classifyTestStockspy.bat](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/classifyTestStockspy.bat)  The actual commands is shown here to allow me to explain some of what is done.
 >```
->classifyFiles -train=data/spy.slp30.train.csv -test=data/spy.slp30.test.csv -numBuck=30 -testOut=tmpout/spy.slp30.out.csv -doOpt=true -optrandomize=false -optMaxTime=5
+>classifyFiles -train=data/spy.slp30.train.csv -test=data/spy.slp30.test.csv -numBuck=30 -testOut=tmpout/spy.slp30.out.csv -doOpt=true -optrandomize=false -optMaxTime=25 -OptClassId=1
 >```
 - -train - location it will read training data from
 - -test - location is will read test data from.  This would be -class if using to predict against current data.
