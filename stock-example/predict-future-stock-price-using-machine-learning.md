@@ -59,7 +59,7 @@ Since we needed to split the data to allow training on the early data while rese
 
 We always allow machine learning engines to train on a part of the data then test how well they learned by running against part of the data they have never seen before. More accurate prediction of results on new data indicates either a good algorithm, a good set of input data or both.   The amount of data used for training for test can be adjusted in  [stock-prep-sma.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/stock-prep-sma.py)   This script is only intended as an example but it could easily be extended to include other indicators and to save a map file to make it easy to map row numbers back to bar dates.
 
-## Sample Machine Learning INput Output generated
+## Sample Machine Learning Input Output generated
 
       class,sl3,sl6,sl12,sl20,sl30,sl60,sl90
       0,-0.004716421918704945,-0.0039838835243605365,-0.0023182429694179247,-0.0021709275598856426,-0.0019349373654685945,-0.001531443306210873,-0.0014528912280701756
@@ -74,7 +74,7 @@ We always allow machine learning engines to train on a part of the data then tes
 ##Running the Classifer 
 
 The classifier is invoked by a shell script [classifyTestStockspy.bat](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/classifyTestStockspy.bat)  The actual commands is shown here to allow me to explain some of what is done.
->```sh
+>```
 >classifyFiles -train=data/spy.slp30.train.csv -test=data/spy.slp30.test.csv -numBuck=30 -testOut=tmpout/spy.slp30.out.csv -doOpt=true -optrandomize=false -optMaxTime=5
 >```
 - -train - location it will read training data from
