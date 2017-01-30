@@ -1,6 +1,6 @@
 # Quantized Machine Learning Classifier
 
-[Stock Price Prediction tutorial](stock-example/predict-future-stock-price-using-machine-learning.md)
+[Stock Price Prediction tutorial](stock-example/predict-future-stock-price-using-machine-learning.md)  [Background](background.md)
 
 The Quantized Classifier is a high performance, high precision classifier built using knowledge I gained while working on classifiers to predict stock price movement over a period of several years.   For some data sets it delivers results equal or better than a Tensorflow Deep Learning while running faster and with fewer dependencies.
 
