@@ -2,7 +2,9 @@
 
 **I provide [consulting services](http://BayesAnalytic.com/contact) to help adapt  [Quantized Classifier](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition) to meet your project needs.**
 
-> > Summary:   During the period tested 36.8% of all SPY bars met our goal of rising by 1% in future bars before the price dropped by 1%.   The engine trained from 1,573 bars while making predictions for 171 bars ending in Jan-2017.     It predicted 33 bars  would meet the goal.  Of those bars it was correct 57.6% of the time.   This represents a  20.8% lift compared to trading random entry points.  The indicators used were primitive so results could improve with additional work. 
+> > Summary:   During the period tested 32% of all SPY bars met our goal of the market price rising by at least 1% before it dropped by 1%.   This means that if you randomly purchased the stock only 1 time out of 3 would you exit with a 1% profit before you hit a stop loss at 1%.    The classifier was able to increase our win rate to 2 out of 3 purchases. 
+> >
+> > The Quantized classifier  trained from 1,399 SPY bars while making predictions for  350 bars  ending in Jan-2017.     It predicted 41 bars  would meet the goal.  Of those bars it was correct 65.8% of the time.   This represents a  33.8% lift compared to trading random entry points.  The indicators used were primitive so results could improve with additional work. 
 
 ## Overview
 >When first learning about stock trading I learned a general rule that if you can predict price movement correctly more than 50% of the time you can make a profit trading stocks provided:
@@ -17,11 +19,19 @@
 
 No system will make 100% accurate predictions  so your profits for any given amount of time will be equal to  (sum of profits from winning trades) - ((sum of losses from loosing trades) + (sum of trading costs).
 
+### Getting Started
+
+[Download the Quantized Classifier repository](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/downloads) and run the [make_go.bat](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/makeGO.bat?at=default&fileviewer=file-view-default) script with a command console open and with the current working directory set to where you unzipped the repository.   This is explained in more detail in the main [Quantized classifier readme](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition).   
+
+Some of the bat files assume that you have installed [cygwin](https://cygwin.com/install.html) and added the cygwin\bin directory to your [PATH environment variable](http://www.computerhope.com/issues/ch000549.htm). 
+
+You can also close the repository directly using Mercurial  using the following URI: https://joexdobs@bitbucket.org/joexdobs/ml-classifier-gesture-recognition  
+
 ### Downloading Data
 
 For this example I downloaded SPY data from yahoo for the period from 2010 to 2016.   I chose this time frame because trading patterns have changed as automated trading has increased which means that data before 2010 is likely to have different patterns.  Since our Machine Learning depends on recognizing patterns using training data that has patterns similar to our current patterns is essential. 
 
-> >   The script to download the SPY data is [yahoo-stock-download.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/yahoo-stock-download.py) but it can easily be changed to download other symbols.  The data file saved is  [SPY.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/SPY.csv) 
+> >   The script to download the SPY data is [yahoo-stock-download.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/yahoo-stock-download.py) but it can easily be changed to download other symbols.  The data file saved is  [SPY.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/SPY.csv)    The baseline data is included with the repository so you only need to run the download script if you want to test against more current data.
 
 #### Sample of CSV File downloaded
       Date,Open,High,Low,Close,Volume,Adj Close
@@ -53,7 +63,9 @@ The number and diversity of possible measurements is nearly infinite but our goa
 
 > > One value the Quantized classifier can provide is it can help identify which indicators deliver predictive value and which ones are just noise.    This form of guidance may be more valuable than the core classification capability. 
 
-For this example I chose to use the slope of the SMA(30) comparing the current value against bars in the past.   I wanted to give the system some ability to detect a longer term down trend followed by a medium term counter trend followed by a short term turn around.    With this in mind I had it measure the slope of change for several points in in the past 3,6,12,20,30,60,90 bars.    This ended up producing a new data set with one row for each bar in the original file except I throw away the first 30 bars of data because the SMA are not valid until you have 30 days of data.   The Machine learning files much use integer class ID so there is a step required to map 
+For this example I chose to use the slope of the Close current value against bars in the past.   I wanted to give the system some ability to detect a longer term down trend followed by a medium term counter trend followed by a short term turn around.    With this in mind I had it measure the slope of change for several points in in the past 3,6,12,20,30,60,90 bars.    
+
+This ended up producing a new data set with one row for each bar in the original file except when using the SMA it throws away the first 30 bars of data because the SMA are not valid until you have N-days of data.   The Machine learning files much use integer class ID so there is a step required to map 
 
 Since we needed to split the data to allow training on the early data while reserving more recent data for testing I went ahead and had the system create  the [spy.slp30.test.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/spy.slp30.test.csv) and [spy.slp30.train.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/spy.slp30.train.csv)    The script that reads the bar file [SPY.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/SPY.csv) is  [stock-prep-sma.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/stock-prep-sma.py)
 
@@ -69,7 +81,9 @@ We always allow machine learning engines to train on a part of the data then tes
 
 > These rows can be mapped back to the source BAR data but there is also a command option but that will require another script that can map our row numbers back to Bar Dates. 
 >
-> **Known flaw:**   [stock-prep-sma.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/stock-prep-sma.py) currently considers bars that we started analyzing a failure if we run out of data before they rise or fall by 1%.   A better solution would be to omit those bars from the Test set because this can cause failures to be reported where the final state for that bar is not really known.  This could understand the sucess of the engine.
+> > > The 30 day version of the converted data is included in the repository. You only need to run it again if you change the parameters in the stock-prep-sma.py or if you downloaded new data. 
+>
+> **Known flaw:**   [stock-prep-sma.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/stock-prep-sma.py) currently considers bars near the end of the input data set a failure under because we run out of data before they rise or fall by 1%.   A better solution would be to omit those bars from the Test set because this can cause failures to be reported where the final state for that bar is not really known.  This could understand the sucess of the engine.
 
 ##Running the Classifer 
 
@@ -85,18 +99,20 @@ The classifier is invoked by a shell script [classifyTestStockspy.bat](https://b
 
 #### Output from Classifier
 
-      numRow=174  sucCnt=114 precis=0.6551724 failCnt=60 failPort=0.3448276
 ##### Summary By Class
 
-      Train Probability of being in any class
-      class=0,  cnt=2635  prob=0.6694215
-      class=1,  cnt=1298  prob=0.3305785
-      Num Train Row=1573 NumCol=8
+    numRow=350  sucCnt=251 precis=0.7171429 failCnt=99 failPort=0.28285712
+    Summary By Class
+    Train Probability of being in any class
+    class=0,  cnt=927  prob=0.66261613
+    class=1,  cnt=472  prob=0.33738384
+    Num Train Row=1399 NumCol=8
     
-      RESULTS FOR TEST DATA
-      class=0 ClassCnt=107 classProb=0.61494255, Predicted=138 Correct=92  recall=0.8598131  Prec=0.6666667 Lift=0.051724136
-      class=1 ClassCnt=64 classProb=0.3678161, Predicted=33 Correct=19  recall=0.296875  Prec=0.57575756 Lift=0.20794147
-      Finished ClassifyTestFiles()
+    RESULTS FOR TEST DATA
+      Num Test Rows=350
+    class=1 ClassCnt=112 classProb=0.32, Predicted=41 Correct=27  recall=0.24107143  Prec=0.6585366 Lift=0.33853662
+    class=0 ClassCnt=238 classProb=0.68, Predicted=309 Correct=224  recall=0.9411765  Prec=0.7249191 Lift=0.044919074
+    Finished ClassifyTestFiles()
 
 #####  Sample of Results by Row
 This output is also saved in the file named -testOut paramter but is changed slightly because the system generates multiple files under some conditions. The file name actually generated this time is tmpout/spy.slp30.out.sum.csv.   This is the actual file you would read to when using the predicted values to make trades.     
@@ -136,6 +152,44 @@ Machine Learning Algorihtms Scientist & Consultant.
 
 
 
+----------------------
+
+## Predict future Silver (SLV) Prices
+
+For silver I chose a harder goal where we wanted to find bars where the price would rise by at least 1.5% before it fell by 0.3%.   That means that the size of our wins would be at least 500% the size of our losses provided we set a stop loss at the 0.3% with a auto exit when stock rose by 1.5%.      
+
+With this magnitude of difference for gains and losses we need a 20% win rate to make a break even.   Anything more than 20% increases profit.      
+
+The Classifier was able to identify 10 out of 501 test bars that it thought would fit this criteria of which 5 turned out to be correct for a win rate of 50% over 2 times what we needed to break even.  
+
+* Data download script [yahoo-stock-download.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/yahoo-stock-download.py) was extended to download daily silver SLV bars back to 2007.  To create [SLV.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/SLV.csv)
+* Data conversion  [stock-prep-sma.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/stock-prep-sma.py) was extended to create silver machine learning files using the SMA30 on close.   Produces [https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/slv.slp30.train.csv](slv.slp30.train.csv)  and  [slv.slp30.test.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/slv.slp30.test.csv)
+* Classification script for [Classification](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/classifyTestStockslv.bat) script for silver added
+
+
+
+#### Output from the classifier run SLV
+
+```
+
+Summary By Class
+Train Probability of being in any class
+class=1,  cnt=719  prob=0.35878244
+class=0,  cnt=1285  prob=0.6412176
+Num Train Row=2004 NumCol=8
+
+RESULTS FOR TEST DATA
+  numRow=501  sucCnt=314 precis=0.62674654 failCnt=187 failPort=0.37325346
+  Num Test Rows=501
+class=0 ClassCnt=314 classProb=0.62674654, Predicted=491 Correct=309  recall=0.98407644  Prec=0.6293279 Lift=0.002581358
+class=1 ClassCnt=187 classProb=0.3732535, Predicted=10 Correct=5  recall=0.026737968  Prec=0.5 Lift=0.1267465
+Finished ClassifyTestFiles()
+```
+
+---------------------
+
+
+
 # Improving Predictions for important classes using the optimizer 
 
 The Optimizer seeks to find relationships in the data that would allow it to improve prediction accuracy and to reduce the negative contribution from data that has negative impact on prediction accuracy.   
@@ -145,6 +199,14 @@ When predicting stocks for this usecase what we really care about is that when w
 As you can see from the two results below the version without the optimizer was accurate 63.8% of the time but it was only accurate 58% of the time when predicting for class 1.     The optimized version was accurate 65.4% of the time but class 1 received a much larger boost so it improved to 71.4% accurate.    Any level of accuracy above 50% can produce a profitable system. 
 
 The randomizer is essentially a semi-random permutation based system so the results will vary from pass to pass depending on the data but  they can improve prediction accuracy  under specific conditions.   Part of the art of applying these systems is learning how to apply them to the current problem. 
+
+-------------------
+
+**NOTE:  As of 2017-01-30 I broke the analyzer when adding in another feature.     I want to implement  pre-analyzer before working on fixing the optimizer.  Please [let me know](http://BayesAnalytic.com) if you need the optimizer working and I will boost it's priority.** 
+
+------------------------------
+
+
 
 #### Example Output with the Optimizer
 
