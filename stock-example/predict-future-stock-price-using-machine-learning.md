@@ -1,12 +1,13 @@
 # Stock Price Prediction ML Tutorial
 
-**I provide [consulting services](http://BayesAnalytic.com/contact) to help adapt  [Quantized Classifier](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition) to meet your project needs.**
+Predicting future stock prices using machine learning can be a daunting process but it also offers promise of profits that would be difficult or impossible to deliver using manual analysis or looking at graphs on a computer screen.    Due to the complexity and jargon many people find using ML out of reach.  This paper shows an easy way to obtain 1 day Bar Data,  Converting bar data into a machine learning freindly format.   Running that data  through our free Quantized Classifer to predict future prices.  It also explains how this work could be extended to support Machine Learning assisted trading as an ongoing process.
 
-> > Summary:   During the period tested 32% of all SPY bars met our goal of the market price rising by at least 1% before it dropped by 1%.   This means that if you randomly purchased the stock only 1 time out of 3 would you exit with a 1% profit before you hit a stop loss at 1%.    The classifier was able to increase our win rate to 2 out of 3 purchases. 
+> > **Summary:**   During the period tested 32% of all SPY bars met our goal of the market price rising by at least 1% before it dropped by 1%.   This means that if you randomly purchased the stock only 1 time out of 3 would you exit with a 1% profit before you hit a stop loss at 1%.    The classifier was able to increase our win rate to 2 out of 3 purchases. 
 > >
 > > The Quantized classifier  trained from 1,399 SPY bars while making predictions for  350 bars  ending in Jan-2017.     It predicted 41 bars  would meet the goal.  Of those bars it was correct 65.8% of the time.   This represents a  33.8% lift compared to trading random entry points.  The indicators used were primitive so results could improve with additional work. 
+> >
+> > **I provide [consulting services](http://BayesAnalytic.com/contact) to help adapt  [Quantized Classifier](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition) to meet your project needs.**
 
-## Overview
 >When first learning about stock trading I learned a general rule that if you can predict price movement correctly more than 50% of the time you can make a profit trading stocks provided:
 >* Your losses per trade are equal same or smaller than your wins. 
 >* Your trades execute at the price expected.
@@ -15,17 +16,29 @@
 > ##### Goal
 >>Our goal then is to use machine learning to help us identify when to Buy a given stock so more than 50% of the time price will rise by a predicted amount.    If we can be accurate a higher percentage of predictions then net profit will be higher provided we can identify a sufficient number of trades to make it worth our effort.
 
-### Compute net profit
-
-No system will make 100% accurate predictions  so your profits for any given amount of time will be equal to  (sum of profits from winning trades) - ((sum of losses from loosing trades) + (sum of trading costs).
+> No system will make 100% accurate predictions  so your profits for any given amount of time will be equal to  (sum of profits from winning trades) - ((sum of losses from loosing trades) + (sum of trading costs).   Increasing the portion of winning trades is an essential component of improving profitability.  Machine learning can help accomplish this. 
 
 ### Getting Started
 
-[Download the Quantized Classifier repository](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/downloads) and run the [make_go.bat](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/makeGO.bat?at=default&fileviewer=file-view-default) script with a command console open and with the current working directory set to where you unzipped the repository.   This is explained in more detail in the main [Quantized classifier readme](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition).   
+Install the [GO compiler](https://golang.org/dl/) to run the main classifier. GO is free, fast to download, easy to install  and open source. 
+
+Install [Python 3.5](https://www.python.org/downloads/release/python-352/) or newer if you want to download new symbol data or use the transform scripts. 
+
+[Download the Quantized Classifier repository](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/downloads) and run the [make_go.bat](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/makeGO.bat?at=default&fileviewer=file-view-default) script with a command console open and with the current working directory set to where you unzipped the repository.   This compiles the GO source code into a exectuable file compatible with your computer.    This is explained in more detail in the main [Quantized classifier readme](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition).      
+
+The only essential command in make_go.bat builds the classifyFiles executable but you need to set the [GOPATH](https://github.com/golang/go/wiki/GOPATH) environment variable to the directory where you places the Quantized Classier before GO will be able to find the source code. 
+
+```
+go build src/classifyFiles.go
+```
 
 Some of the bat files assume that you have installed [cygwin](https://cygwin.com/install.html) and added the cygwin\bin directory to your [PATH environment variable](http://www.computerhope.com/issues/ch000549.htm). 
 
-You can also close the repository directly using Mercurial  using the following URI: https://joexdobs@bitbucket.org/joexdobs/ml-classifier-gesture-recognition  
+You can also clone the Quantized Classifier directly using [Mercurial](https://www.mercurial-scm.org/wiki/QuickStart)  and the following command:
+
+```
+hg clone https://joexdobs@bitbucket.org/joexdobs/ml-classifier-gesture-recognition
+```
 
 ### Downloading Data
 
@@ -135,36 +148,20 @@ This output is also saved in the file named -testOut paramter but is changed sli
 
 
 
-# Wrap up Summary
-
-This is a super simple example. There are all kinds of enhancements some in the engine and others in the indicators. EG: A indicator showing the % over to 30 day low and % under 30 day max might give good predictive input. 
-
-This is included with our [free open source classifier](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition)I recently released. It is still rough in a lot of places but is yielding good test results. 
-
-My hope is that people will see what they get for free and then be willing to [pay me](http://BayesAnalytic.com/contact) to make enhancements to meet their needs and integrate it into their systems. 
-
-Note: The optimizer currently does not save the settings found so the actual results can vary by run.   I am working on that feature. 
-
-**I hope this helps feel free to contact me with questions**
-
-Thanks [Joe Ellsworth](http://BayesAnalytic.com/contact)
-Machine Learning Algorihtms Scientist & Consultant.
-
-
-
 ----------------------
 
 ## Predict future Silver (SLV) Prices
 
 For silver I chose a harder goal where we wanted to find bars where the price would rise by at least 1.5% before it fell by 0.3%.   That means that the size of our wins would be at least 500% the size of our losses provided we set a stop loss at the 0.3% with a auto exit when stock rose by 1.5%.      
 
-With this magnitude of difference for gains and losses we need a 20% win rate to make a break even.   Anything more than 20% increases profit.      
+With this magnitude of difference for gains and losses we need a 20% win rate to break even.   Anything more than 20% increases profit.      
 
-The Classifier was able to identify 10 out of 501 test bars that it thought would fit this criteria of which 5 turned out to be correct for a win rate of 50% over 2 times what we needed to break even.  
+The Classifier was able to identify 10 out of 501 test bars that it thought would fit this criteria of which 5 turned out to be correct for a win rate of 50% over 2X what we needed to break even.  
 
 * Data download script [yahoo-stock-download.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/yahoo-stock-download.py) was extended to download daily silver SLV bars back to 2007.  To create [SLV.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/SLV.csv)
-* Data conversion  [stock-prep-sma.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/stock-prep-sma.py) was extended to create silver machine learning files using the SMA30 on close.   Produces [https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/slv.slp30.train.csv](slv.slp30.train.csv)  and  [slv.slp30.test.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/slv.slp30.test.csv)
-* Classification script for [Classification](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/classifyTestStockslv.bat) script for silver added
+* Data conversion  [stock-prep-sma.py](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/stock-prep-sma.py) was extended to create silver machine learning files using the SMA30 on close.   Produces [slv.slp30.train.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/slv.slp30.train.csv)  and  [slv.slp30.test.csv](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/data/slv.slp30.test.csv)
+* Quantized Classifier Classification script  [classifyTestStockslv.bat](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/classifyTestStockslv.bat)  for silver added.  Still uses the Classify Files executable but with different parameters.
+* TensorFlow classification script  [CNNClassifyStockSLV.bat](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/tlearn/CNNClassifyStockSLV.bat)
 
 
 
@@ -219,137 +216,46 @@ One of the more interesting challenges is that some authors have opinions that a
 
 Ultimately sentiment data can be reduced to numbers that are added to the original technical data to help boost accuracy of prediction or it can be used to adjust acceptable risk thresholds for portfolio management.      For example we could have a set of numbers such twitterMarketRise=0.5 meaning that the twitter feed seems to be neutral.     SeekingAlphaIBMBull=0.9  which means the seeking alpha analysts as a set are very bulling thinking IBM will rise.    Since we want to consolidate many sources into a small number of numbers being able to adjust for credibility of the source is critical.    The total number of valid columns is only limited by our imagination but more columns can actually hurt predictive accuracy if they contain only noise with no signal. 
 
+## Extending for a Trading System
 
+Trading systems can be super complex trading hundreds of times per day or easy to build providing information to assist a human trader choosing trades.  Assuming that we wanted to build a system that provided a human trader between 4 and 10 purchases per day and that depending on market conditions many days can pass without a trade things can be relatively simple.     We can assume the user will use a simple stop loss order to limit loss at  specified level and that they will exit the with a profit taker would allow reasonable performance at reasonable levels of effort.  There are people who are know to game the system and trigger stop loss orders so it is sometimes safer to use larger stop loss windows. margins and manually exit if the market moves adversely.  
 
-## My Objective
+### Extending the system for Human based Day trading:
+
+* Choose several more symbols you want to trade.    The SPY Example delivered 43 purchases in roughly 1 year worth of bars that is a little less than 1 trade per week.  If you want 4 trades per week you will need at least 8 symbols the system is tracking 15 would probably be better. 
+* Enhance the data download scripts to download data for the extra symbols.
+* Enhance the data download scripts to only download most recent data and add it to existing bar files.
+* Add more sophisticated and greater number of indicators to data conversion script.   Good traders should try to duplicate indicators they already know and trust.  If a indicator works well for humans to predict price movements the same indicator may also provide good input to the classifier. 
+* Enhance the Data conversion script to run for the additional symbols 
+* Modify the Data conversion script to copy all but most recent Bar to Training file while only the most recent bar is place in the .class.csv input file.    You actually need two sets of these one that only places most recent bars in the .class file and one that places 10% to 20% of the most recent bars in the .test file.  You will need both during system tuning.   These are one line shell scripts so it is easiest to copy and change the names. 
+* Create new classifier scripts to run against the different symbols.   These are one line shell scripts so it is easiest to copy and change the names. 
+* Create new classifier scripts using the -class parameter instead of the -class instead of the -test command parameter so it produces a CSV output with the classifiers prediction for the most recent bar.   You actually need two scripts for each symbol one for testing you need during test and configuration and one for classifying.   These are one line shell scripts so it is easiest to copy and modify. 
+* Tweak the Data conversion script and classifier parameters to find acceptably good performance for each symbol.    This is the most critical step because as you change goals and the symbols the system is analyzing you will need to find different combinations of indicators.  For example in the SPY system we look at the slope of the change in close for 3,6,12,20,30,60,90 days.   This one was looking for a 1% gain before a 1% drop so if you wanted to predict for a 5% gain then at the very least the number of days used in the comparison would need to change. 
+* Write a script that reads the classifier output and summarizes the output from all the symbols and the different configurations in a human friendly version for the manual trader. 
+* Write a parent script to run all these scripts in one step sometime after market close and before market opens.  It could also run throughout the day depending on the parameters the user chose. 
+* Optional: Hook the summary script so it runs automatically and has the content available in he morning for human traders.  
+* Optional: Hooking the summary output up so the system send an email or text to the user when there is a recomended trade.
+* Optional: Reverse the detection logic to detect high risk of rapid market drops to notify user when to exit positions for all symbols the user may be holding. 
+* Optional: Users need to review the performance by class periodically to ensure the market has not changed and that the system is still producing good data. 
+
+It is perfectly reasonable to have several different configurations of indicators working running as if they are different strategies on the same symbol through the same classifier.  This can be helpful where traders can gain confidence if more than one strategy recommends buying the same symbol. 
+
+Extending this system to become a full fledged fully automated trading system could be a large project including building brokerage API, fault tolerance and all the other features needed for automated trading.   I would love to [provide consulting services](http://BayesAnalytic.com/contact) to build this system around quantized classifier. 
+
+## Wrap up
 
 My hope is that this article will inspire some of those working on trading systems to use [Quantized Classifier](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition)  as a component of their solution stack.  I  would love to provide [consulting services](http://BayesAnalytic.com/contact) to help them build a production grade system around the classifier.    I am also willing to provide consulting services to [add features they need](http://BayesAnalytic.com/contact) to Quantized classifier.   
 
----------------------
+This is a super simple example. There are all kinds of enhancements some in the engine and others in the indicators. EG: A indicator showing the % over to 30 day low and % under 30 day max might give good predictive input. 
 
+All these scripts are included with our [free open source classifier](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition)   
 
+My hope is that people will see what they get for free and then be willing to [pay me](http://BayesAnalytic.com/contact) to make enhancements to meet their needs and integrate it into their systems. 
 
+**I hope this helps feel free to contact me with questions**
 
+Thanks [Joe Ellsworth](http://BayesAnalytic.com/contact)
+Machine Learning Algorithms Scientist & Consultant.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Improving Predictions for important classes using the optimizer 
-
-The Optimizer seeks to find relationships in the data that would allow it to improve prediction accuracy and to reduce the negative contribution from data that has negative impact on prediction accuracy.   
-
-When predicting stocks for this usecase what we really care about is that when we think a stock will go up it really does go up by at least our 1% before it drops by more than 1%.    This means that predicting for class 1 the stock rising is more important than class 0 the stock falling simply because we will ignore class 0 predictions but if the system predicts a class 1 then we will buy the stock and will loose money when the system is wrong.   
-
-As you can see from the two results below the version without the optimizer was accurate 63.8% of the time but it was only accurate 58% of the time when predicting for class 1.     The optimized version was accurate 65.4% of the time but class 1 received a much larger boost so it improved to 71.4% accurate.    Any level of accuracy above 50% can produce a profitable system. 
-
-The randomizer is essentially a semi-random permutation based system so the results will vary from pass to pass depending on the data but  they can improve prediction accuracy  under specific conditions.   Part of the art of applying these systems is learning how to apply them to the current problem. 
-
--------------------
-
-**NOTE:  As of 2017-01-30 I broke the Optimizer when adding in another feature.     I want to implement  pre-analyzer before working on fixing the optimizer.  Please [let me know](http://BayesAnalytic.com) if you need the optimizer working and I will boost it's priority.** 
-
-------------------------------
-
-
-
-#### Example Output with the Optimizer
-
-```
-numRow=174  sucCnt=112 precis=0.6436782 failCnt=62 failPort=0.3563218
-Summary By Class
-Train Probability of being in any class
-class=0,  cnt=2635  prob=0.6694215
-class=1,  cnt=1298  prob=0.3305785
-Num Train Row=1573 NumCol=8
-
-RESULTS FOR TEST DATA
-  Num Train Rows=174
-class=0 ClassCnt=109 classProb=0.62643677, Predicted=167 Correct=107  recall=0.98165137  Prec=0.6407186 Lift=0.014281809
-class=1 ClassCnt=65 classProb=0.37356323, Predicted=7 Correct=5  recall=0.07692308  Prec=0.71428573 Lift=0.3407225
-Finished ClassifyTestFiles()
-```
-
-#### Example Output without the Optimizer
-
-```
-numRow=174  sucCnt=111 precis=0.63793105 failCnt=63 failPort=0.36206895
-Summary By Class
-Train Probability of being in any class
-class=1,  cnt=520  prob=0.3305785
-class=0,  cnt=1053  prob=0.6694215
-Num Train Row=1573 NumCol=8
-
-RESULTS FOR TEST DATA
-  Num Train Rows=174
-class=1 ClassCnt=65 classProb=0.37356323, Predicted=12 Correct=7  recall=0.10769231  Prec=0.5833333 Lift=0.20977008
-class=0 ClassCnt=109 classProb=0.62643677, Predicted=162 Correct=104  recall=0.95412844  Prec=0.6419753 Lift=0.015538514
-
-```
 
