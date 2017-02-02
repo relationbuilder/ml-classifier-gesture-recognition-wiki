@@ -313,7 +313,7 @@ The randomizer is essentially a semi-random permutation based system so the resu
 
 -------------------
 
-**NOTE:  As of 2017-01-30 I broke the analyzer when adding in another feature.     I want to implement  pre-analyzer before working on fixing the optimizer.  Please [let me know](http://BayesAnalytic.com) if you need the optimizer working and I will boost it's priority.** 
+**NOTE:  As of 2017-01-30 I broke the Optimizer when adding in another feature.     I want to implement  pre-analyzer before working on fixing the optimizer.  Please [let me know](http://BayesAnalytic.com) if you need the optimizer working and I will boost it's priority.** 
 
 ------------------------------
 
