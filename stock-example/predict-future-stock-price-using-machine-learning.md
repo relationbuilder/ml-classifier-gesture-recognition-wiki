@@ -183,38 +183,7 @@ class=1 ClassCnt=187 classProb=0.3732535, Predicted=10 Correct=5  recall=0.02673
 Finished ClassifyTestFiles()
 ```
 
-# Adding Additional Data sources  
 
-The analysis above was based on technical data derived from directly from BAR data.  There are other sources of data that could be used to add refinement to the predictive capacity of of the system.   They are roughly classed as followed.   
-
-* Company Fundementals Data.
-
-* Time Before and After the Next financials are released
-
-* Important Market influencers such as Fed Announcements.   Market swings can be particularly volatile and so far outside the norm that it will confuse machine learning statisitics immediatly before and following those events.
-
-* Wars and Rumors Wars.    Elections and Fears about Elections.
-
-* News,  Commentary,  Blogging, Tweets, ect producing what is roughly classified as Sentiment data.
-
-
-##### Fundamental data
-
-Some of this data is easily added to the technical data simply as a extra few columns of data in the CSV files.  The Machine learning classifier doesn't care were the data comes from as long as it can be represented in a number in the CSV that has value for every row.    A perfect example of this could be the companies dept to equity ratio or their rate of increase in sales over the last 2 quarters both of which could influence future stock prices. 
-
-##### Market moving Events 
-
-Other aspects such as the fed announcements are harder to incorporate as a single number since not body knows what they are going to say.   This can be added to the model as a feature but it may be easier to simply lock out trading for the few days before and after these announcements unless you are building a trading system to try  on capitalize on those points of high volatility.
-
-##### Sentiment Data
-
-News and textual sentiment data can be mined and added to the engine both as a market wide sentiment and as sentiment about the company.  In general the [sentiment mining requires different approach](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/docs/text-classification/overview-classification.md) so the the best way to approach it is to use a separate classifier that is digesting the news data and producing numbers that can be added to the exisitng CSV as additional data columns.    
-
-One of the greatest challenges with sentiment data is gaining access to the text containing necessary data in a timely fashion and a reasonable cost.  Many sites that contain valuable commentary that could be mined for sentiment but it is hidden behind pay walls.   Other text like twitter is free but may contain very limited value with lots of noise.          When I find a free source that is worth mining I will add it as an example to for the Quantized classifier. 
-
-One of the more interesting challenges is that some authors have opinions that are more likely to be correct than others.   Any sentiment mining system needs to incorporate a notion of author credibility  and use it to rate sentiment from authors with greater credibility as higher influence than others.
-
-Ultimately sentiment data can be reduced to numbers that are added to the original technical data to help boost accuracy of prediction or it can be used to adjust acceptable risk thresholds for portfolio management.      For example we could have a set of numbers such twitterMarketRise=0.5 meaning that the twitter feed seems to be neutral.     SeekingAlphaIBMBull=0.9  which means the seeking alpha analysts as a set are very bulling thinking IBM will rise.    Since we want to consolidate many sources into a small number of numbers being able to adjust for credibility of the source is critical.    The total number of valid columns is only limited by our imagination but more columns can actually hurt predictive accuracy if they contain only noise with no signal. 
 
 ## Extending for a Trading System
 
@@ -257,5 +226,34 @@ My hope is that people will see what they get for free and then be willing to [p
 Thanks [Joe Ellsworth](http://BayesAnalytic.com/contact)
 Machine Learning Algorithms Scientist & Consultant.
 
+--------------------
 
+--------------------
 
+# Adding Additional Data sources
+
+The analysis above was based on technical data derived from directly from BAR data.  There are other sources of data that could be used to add refinement to the predictive capacity of of the system.   They are roughly classed as followed.   
+
+- Company Fundementals Data.
+- Time Before and After the Next financials are released
+- Important Market influencers such as Fed Announcements.   Market swings can be particularly volatile and so far outside the norm that it will confuse machine learning statisitics immediatly before and following those events.
+- Wars and Rumors Wars.    Elections and Fears about Elections.
+- News,  Commentary,  Blogging, Tweets, ect producing what is roughly classified as Sentiment data.
+
+##### Fundamental data
+
+Some of this data is easily added to the technical data simply as a extra few columns of data in the CSV files.  The Machine learning classifier doesn't care were the data comes from as long as it can be represented in a number in the CSV that has value for every row.    A perfect example of this could be the companies dept to equity ratio or their rate of increase in sales over the last 2 quarters both of which could influence future stock prices. 
+
+##### Market moving Events
+
+Other aspects such as the fed announcements are harder to incorporate as a single number since not body knows what they are going to say.   This can be added to the model as a feature but it may be easier to simply lock out trading for the few days before and after these announcements unless you are building a trading system to try  on capitalize on those points of high volatility.
+
+##### Sentiment Data
+
+News and textual sentiment data can be mined and added to the engine both as a market wide sentiment and as sentiment about the company.  In general the [sentiment mining requires different approach](https://bitbucket.org/joexdobs/ml-classifier-gesture-recognition/src/default/docs/text-classification/overview-classification.md) so the the best way to approach it is to use a separate classifier that is digesting the news data and producing numbers that can be added to the exisitng CSV as additional data columns.    
+
+One of the greatest challenges with sentiment data is gaining access to the text containing necessary data in a timely fashion and a reasonable cost.  Many sites that contain valuable commentary that could be mined for sentiment but it is hidden behind pay walls.   Other text like twitter is free but may contain very limited value with lots of noise.          When I find a free source that is worth mining I will add it as an example to for the Quantized classifier. 
+
+One of the more interesting challenges is that some authors have opinions that are more likely to be correct than others.   Any sentiment mining system needs to incorporate a notion of author credibility  and use it to rate sentiment from authors with greater credibility as higher influence than others.
+
+Ultimately sentiment data can be reduced to numbers that are added to the original technical data to help boost accuracy of prediction or it can be used to adjust acceptable risk thresholds for portfolio management.      For example we could have a set of numbers such twitterMarketRise=0.5 meaning that the twitter feed seems to be neutral.     SeekingAlphaIBMBull=0.9  which means the seeking alpha analysts as a set are very bulling thinking IBM will rise.    Since we want to consolidate many sources into a small number of numbers being able to adjust for credibility of the source is critical.    The total number of valid columns is only limited by our imagination but more columns can actually hurt predictive accuracy if they contain only noise with no signal. 
